@@ -1,0 +1,159 @@
+#Libraries----
+library(ggplot2)
+library(tidyverse)
+
+
+#Style----
+style <- function(){ #setting the style for my plots
+  font <- "Helvetica"
+  theme(plot.title = element_text(family = font, size = 14, face = "bold", color = "#222222", hjust = 0.5), 
+        plot.subtitle = element_text(family = font, size = 12, margin = margin(9, 0, 9, 0)), 
+        plot.caption = element_blank(),
+        plot.margin = unit(c(1,1,1,1), units = , "cm"),
+        legend.text.align = 0, 
+        legend.position = "bottom",
+        legend.title = element_text(family = font, size = 9, face = "bold", color = "#222222",  hjust = 0.5), 
+        legend.key = element_blank(), 
+        legend.text = element_text(family = font, size = 9, color = "#222222"),
+        axis.text = element_text(family = font, size = 9, color = "#222222"), 
+        axis.text.x = element_text(margin = margin(5, b = 10)), 
+        axis.title = element_text(family = font, size = 12, face = "bold", color = "#222222"), 
+        axis.ticks = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        strip.text = element_text(size = 12, hjust = 0))
+}
+
+#Importing raw data----
+bird_t <-read.csv("occurence_dat/bird_transect_occurence.csv") #import the bird transact data
+bird_p <-read.csv("occurence_dat/bird_point_occurence.csv")
+
+#1.Transact data----
+bird_t <-bird_t %>% 
+  select(eventID,individualCount,scientificName,family,genus,species) %>% #keeping the needed columns only
+  mutate(Plot = case_when( #creating a new column called plot
+    grepl("^n", eventID, ignore.case = TRUE) ~ "Northern Plot", #classifying eventID with "n" as Northern Plot
+    grepl("^s", eventID, ignore.case = TRUE) ~ "Southern Plot", #classifying eventID with "s" as Southern Plot
+    TRUE ~ "Unknown"
+  ))
+  
+
+(Bird_transact <- ggplot(bird_t, aes(fill=species, y=individualCount,x=family))+ #plotting the individual birds observed per plot
+  geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
+  facet_wrap(~Plot)+ #seperating the Northerna and Southern Plots for comparision
+  labs(x = "Bird Families", y = "Individuals Observed", 
+       title = "Birds sampled in transacts for Northern and Southern Plots")+
+  style()+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+ggsave(filename = "figures/Birds_transact.png", plot = Bird_transact,width = 10, height = 6) #exporting the graph as png
+
+bird_t <- bird_t %>% 
+  mutate(richness=1) %>% #creating a column for species richness
+  mutate(Trans = case_when( #creating a column for transact
+    grepl("1", eventID, ignore.case = TRUE) ~ "Low",
+    grepl("2", eventID, ignore.case = TRUE) ~ "Mid",    
+    grepl("3", eventID, ignore.case = TRUE) ~ "High",
+    TRUE ~ "Unknown"))#sorting the samples into different transacts by their eventID 
+
+  
+(Bird_t_rich <- ggplot(bird_t, aes(fill=species, y=richness, x=Trans))+ #Plotting the species richness by transact with species composition
+  geom_bar(stat = "identity", postion = "stack",orientation = "x")+
+    labs(x = "Transacts", y = "Species Richness", 
+         title = "Birds species richness in each transact")+
+    facet_wrap(~Plot)+#seperating the Northerna and Southern Plots for comparision
+    style()+
+    scale_x_discrete(labels = c("Low", "Mid", "High")))
+    
+
+ggsave(filename = "figures/Birds_transact_richness.png", plot = Bird_t_rich,width = 10, height = 6) #exporting the graph as png
+
+
+(Bird_t_rich_2 <- ggplot(bird_t, aes(y=richness, x=Trans))+#Plotting the species richness by transact
+    geom_bar(stat = "identity",orientation = "x")+
+    labs(x = "Transacts", y = "Species Richness", 
+         title = "Birds species richness in each transact")+
+    facet_wrap(~Plot)+#seperating the Northerna and Southern Plots for comparision
+    style()+
+    scale_x_discrete(labels = c("Low", "Mid", "High")))
+
+
+ggsave(filename = "figures/Birds_transact_richness_2.png", plot = Bird_t_rich_2,width = 10, height = 6) 
+
+bird_t_rich <- bird_t%>% 
+  distinct(scientificName,Plot) %>% 
+  mutate(richness=1)
+
+(Bird_t_rich_3 <- ggplot(bird_t_rich, aes(y=richness, x=Plot))+#Plotting the species richness by transact
+    geom_bar(stat = "identity",orientation = "x")+
+    labs(x = "Plots", y = "Species Richness", 
+         title = "Birds species richness in each transact")+
+    style())
+
+#2.Point Count Data----
+
+bird_p <-bird_p %>% 
+  select(eventID,individualCount,scientificName,family,genus,species) %>% #keeping the needed columns only
+  mutate(Plot = case_when( #creating a new column called plot
+    grepl("pointN", eventID, ignore.case = TRUE) ~ "Northern Plot", #classifying eventID with "n" as Northern Plot
+    grepl("pointS", eventID, ignore.case = TRUE) ~ "Southern Plot", #classifying eventID with "s" as Southern Plot
+    TRUE ~ "Unknown"
+  ))
+
+(Bird_Point <- ggplot(bird_p, aes(fill=species, y=individualCount,x=family))+ #plotting the individual birds observed per plot
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
+    facet_wrap(~Plot)+ #seperating the Northerna and Southern Plots for comparision
+   labs(x = "Bird Families", y = "Individuals Observed", 
+         title = "Birds sampled by point count in Northern and Southern Plots")+
+    style()+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+
+ggsave(filename = "figures/Birds_point.png", plot = Bird_Point,width = 10, height = 6) #exporting the graph as png
+
+bird_p <- bird_p %>% #adding a column for species richness
+  mutate(richness=1)
+
+(Bird_p_rich <- ggplot(bird_p, aes(y=richness, x=Plot))+#Plotting the species richness by point count
+    geom_bar(stat = "identity",orientation = "x")+
+    labs(x = "Point Counts", y = "Species Richness", 
+         title = "Birds species richness sampled by point count\nin Northern and Southern Plots")+
+    style())
+
+
+ggsave(filename = "figures/Birds_point_richness.png", plot = Bird_p_rich,width = 5, height = 6) #exporting the graph as png
+
+
+(Bird_p_rich_2 <- ggplot(bird_p, aes(fill=species, y=richness, x=Plot))+ #Plotting the species richness by point count showing species composition
+    geom_bar(stat = "identity", postion = "stack",orientation = "x")+ 
+    labs(x = "Point Counts", y = "Species Richness", 
+         title = "Birds species richness sampled by point count\nin Northern and Southern Plots")+
+    style())
+
+ggsave(filename = "figures/Birds_point_richness_2.png", plot = Bird_p_rich_2,width = 5, height = 6) #exporting the graph as png
+
+#3. Total----
+bird_total <- bird_t %>% 
+  select(-Trans)
+
+bird_total <- rbind(bird_total,bird_p) %>% 
+  select(-eventID)
+
+(Bird_Total <- ggplot(bird_total, aes(fill=species, y=individualCount,x=family))+ #plotting the individual birds observed per plot
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
+    facet_wrap(~Plot)+ #seperating the Northerna and Southern Plots for comparision
+    labs(x = "Bird Families", y = "Individuals Observed", 
+         title = "Total Birds sampled by point count and transacts\nin Northern and Southern Plots")+
+    style()+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+ggsave(filename = "figures/Birds_total.png", plot = Bird_Total,width = 10, height = 10) #exporting the graph as png
+
+bird_total_rich <- bird_total %>% 
+  distinct(scientificName,Plot) %>% 
+  mutate(richness=1)
+
+(Bird_total_rich <- ggplot(bird_total_rich, aes(y=richness, x=Plot))+#Plotting the species richness by point count
+    geom_bar(stat = "identity",orientation = "x")+
+    labs(x = "Point Counts", y = "Species Richness", 
+         title = "Total Birds species richness sampled by point count and transacts\nin Northern and Southern Plots")+
+    style())
