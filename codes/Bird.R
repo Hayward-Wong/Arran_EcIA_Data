@@ -24,8 +24,8 @@ style <- function(){ #setting the style for my plots
 }
 
 #Importing raw data----
-bird_t <-read.csv("occurence_dat/bird_transect_occurence.csv") #import the bird transact data
-bird_p <-read.csv("occurence_dat/bird_point_occurence.csv")
+bird_t <-read.csv("occurrence_dat/bird_transect_occurence.csv") #import the bird transact data
+bird_p <-read.csv("occurrence_dat/bird_point_occurence.csv")
 
 #1.Transact data----
 bird_t <-bird_t %>% 
@@ -154,6 +154,6 @@ bird_total_rich <- bird_total %>%
 
 (Bird_total_rich <- ggplot(bird_total_rich, aes(y=richness, x=Plot))+#Plotting the species richness by point count
     geom_bar(stat = "identity",orientation = "x")+
-    labs(x = "Point Counts", y = "Species Richness", 
+    labs(x = "Plots", y = "Species Richness", 
          title = "Total Birds species richness sampled by point count and transacts\nin Northern and Southern Plots")+
     style())
