@@ -25,7 +25,7 @@ style <- function(){ #setting the style for my plots
 
 #Importing raw data----
 ainv<-read.csv("occurrence_dat/aquatic_inverts_occurrence.csv")#loading the aquatic inverts data
-#Aquatic inverts 
+#Aquatic inverts----
 
 ainv <-ainv %>% 
   select(eventID,individualCount,phylum,class,order,family,genus) %>% #keeping the needed columns only
@@ -61,17 +61,19 @@ Marsh<-ainv %>%
                                  "Hydrophilidae" = "#00c0b2"))+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
+ggsave(filename = "figures/Aquatic_inverts/stream_ab.png", plot = Stream_ab, width = 8, height = 5) #exporting the graph as png
 
 
 
-(Marsh_ab <- ggplot(Marsh, aes(fill=family,y=individualCount,x=order))+ #plotting the individual birds observed per plot
-    geom_bar(stat = "identity",position = "stack",orientation = "x")+
+(Marsh_ab <- ggplot(Marsh, aes(y=individualCount,x=order))+ #plotting the individual birds observed per plot
+    geom_bar(stat = "identity",orientation = "x")+
     facet_wrap(~Plot)+ #seperating the Northerna and Southern Plots for comparision
     labs(x = "Invertebrate Orders", y = "Individuals Observed", 
          title = "Aquatic Invertebrates sampled in marshes")+
     style()+
-    scale_fill_manual(values = c("unidentified" = "#6a6a6a"))+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+ggsave(filename = "figures/Aquatic_inverts/marsh_ab.png", plot = Marsh_ab, width = 8, height = 5) #exporting the graph as png
 
 
 ainv_total_rich <- ainv %>% 
@@ -83,3 +85,5 @@ ainv_total_rich <- ainv %>%
     labs(x = "Plots", y = "Order Richness", 
          title = "Total Aquatic Order richness sampled\nin Northern and Southern Plots")+
     style())
+
+ggsave(filename = "figures/Aquatic_inverts/richness.png", plot = Ainv_total_rich, width = 5, height = 5) #exporting the graph as png
