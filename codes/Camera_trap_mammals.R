@@ -24,7 +24,7 @@ style <- function(){ #setting the style for my plots
 }
 
 #Importing raw data----
-camera_trap<-read.csv("occurrence_dat/camera_trap_occurence.csv")#loading the camera trap data
+camera_trap<-read.csv("occurrence_dat/camera_trap_occurrence.csv")#loading the camera trap data
 #Mammals----
 mammals<-camera_trap %>% 
   filter(class=="Mammalia")

@@ -24,7 +24,7 @@ style <- function(){ #setting the style for my plots
 }
 
 #Importing raw data----
-ainv<-read.csv("occurrence_dat/aquatic_inverts_occurence.csv")#loading the aquatic inverts data
+ainv<-read.csv("occurrence_dat/aquatic_inverts_occurrence.csv")#loading the aquatic inverts data
 #Aquatic inverts 
 
 ainv <-ainv %>% 
