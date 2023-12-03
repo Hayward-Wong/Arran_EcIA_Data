@@ -1,7 +1,7 @@
 # Figures
 > ### by Hayward Wong
 ## Summary
-Here are all the Figures used the Lochranza Ecological Impact Assessment sorted by their categories
+Here are folders of all the Figures used the Lochranza Ecological Impact Assessment sorted by their categories
 ### Important Files
 
 | File name | Description |
