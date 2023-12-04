@@ -47,11 +47,11 @@ pitfall<-tinv %>% #Keeping only pitfall
 snet<-tinv %>%
   filter(method == "sweepnet") %>% #Keeping only sweepnet
   filter(occurrenceStatus == "present") %>% #Keeping present data only
-  mutate(Trans = case_when( #creating a column for transact
+  mutate(Trans = case_when( #creating a column for transect
     grepl("L", eventID, ignore.case = TRUE) ~ "Low",
     grepl("M", eventID, ignore.case = TRUE) ~ "Mid",    
     grepl("H", eventID, ignore.case = TRUE) ~ "High",
-    TRUE ~ "Unknown")) #sorting the samples into different transacts by their eventID 
+    TRUE ~ "Unknown")) #sorting the samples into different transects by their eventID 
  
 snet$Trans<-factor(snet$Trans, levels = c("Low", "Mid", "High"))#ordering the factor levels
 
@@ -106,11 +106,11 @@ ggsave(filename = "figures/Terrestrial_inverts/Pitfall_rich.png", plot = rich_p,
 
 ggsave(filename = "figures/Terrestrial_inverts/Snet_abun.png", plot = abun_s, width = 7.5, height = 5) #exporting the graph as png
 
-#base on transact
-(abun_s_t<-ggplot(snet, aes(fill=order, y=individualCount,x=Trans))+ #plotting the abundanc if inverts base on transacts
+#base on transect
+(abun_s_t<-ggplot(snet, aes(fill=order, y=individualCount,x=Trans))+ #plotting the abundanc if inverts base on transects
     geom_bar(stat = "identity",position = "stack",orientation = "x")+
     facet_wrap("Plot")+ #comparing the northern and souther plots
-    labs(x = "Transacts", y = "Number of Individuals", 
+    labs(x = "transects", y = "Number of Individuals", 
          title = "Number of Invertebrates sampled by sweep-netting\nin Northern and Southern Plots")+
     style())
 
@@ -129,15 +129,37 @@ s_rich <- snet %>%
 ggsave(filename = "figures/Terrestrial_inverts/Snet_rich.png", plot = rich_s, width = 7.5, height = 5) #exporting the graph as png
 
 
-#base on transact
+#base on transect
 s_rich_2 <- snet %>% 
-  distinct(order,family,Plot,richness,Trans) #keeping dinstinct families per transact
+  distinct(order,family,Plot,richness,Trans) #keeping dinstinct families per transect
 
 (rich_s_t<-ggplot(s_rich_2, aes(fill=order, y=richness,x=Trans))+ #plotting the number of pifalls that are empty or not
     geom_bar(stat = "identity",position = "stack",orientation = "x")+
     facet_wrap("Plot")+ #comparing the northern and souther plots
-    labs(x = "Transacts", y = "Family Richness", 
+    labs(x = "transects", y = "Family Richness", 
          title = "Invertebrate family richness sampled by sweep-netting\nin Northern and Southern Plots")+
     style())
 
 ggsave(filename = "figures/Terrestrial_inverts/Snet_Trans_rich.png", plot = rich_s_t, width = 7.5, height = 5) #exporting the graph as png
+
+#4. Total----
+total <- tinv %>% 
+  filter(occurrenceStatus == "present")
+
+(abun_tot<-ggplot(total, aes(fill=order, y=individualCount,x=Plot))+ #plotting the abundance of inverts
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+
+    labs(x = "Plots", y = "Number of Individuals", 
+         title = "Number of Invertebrates sampled by pitfall and sweep-netting\nin Northern and Southern Plots")+
+    style())
+
+ggsave(filename = "figures/Terrestrial_inverts/abun_tot.png", plot = abun_tot, width = 7.5, height = 5) #exporting the graph as png
+
+
+(rich_tot<-ggplot(total, aes(fill=order, y=richness,x=Plot))+ #plotting the number of pifalls that are empty or not
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+
+    labs(x = "Plots", y = "Family Richness", 
+         title = "Invertebrate family richness sampled by pitfall and sweep-netting\nin Northern and Southern Plots")+
+    style())
+
+ggsave(filename = "figures/Terrestrial_inverts/rich_tot.png", plot = rich_tot, width = 7.5, height = 5) #exporting the graph as png
+

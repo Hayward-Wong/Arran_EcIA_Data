@@ -34,11 +34,11 @@ tree<-tree%>%
     grepl("^s", eventID, ignore.case = TRUE) ~ "Southern Plot", #classifying eventID with "s" as Southern Plot
     TRUE ~ "Unknown"))%>% 
     mutate(richness=1)%>%  #creating a column for species richness
-    mutate(Trans = case_when( #creating a column for transact
+    mutate(Trans = case_when( #creating a column for transect
       grepl("1", eventID, ignore.case = TRUE) ~ "Low",
       grepl("2", eventID, ignore.case = TRUE) ~ "Mid",    
       grepl("3", eventID, ignore.case = TRUE) ~ "High",
-      TRUE ~ "Unknown"))#sorting the samples into different transacts by their eventID 
+      TRUE ~ "Unknown"))#sorting the samples into different transects by their eventID 
 
 tree$Trans <- factor(tree$Trans, levels = c("Low", "Mid", "High"))#ordering the factor levels
 
@@ -52,11 +52,11 @@ tree$Trans <- factor(tree$Trans, levels = c("Low", "Mid", "High"))#ordering the 
 
 ggsave(filename = "figures/Trees/tree_abun.png", plot = t_abun, width = 7.5, height = 5) #exporting the graph as png
 
-#base on transact
-(t_abun2<-ggplot(tree, aes(fill=species, y=individualCount,x=Trans))+ #plotting the abundanc if inverts base on transacts
+#base on transect
+(t_abun2<-ggplot(tree, aes(fill=species, y=individualCount,x=Trans))+ #plotting the abundanc if inverts base on transects
     geom_bar(stat = "identity",position = "stack",orientation = "x")+
     facet_wrap("Plot")+ #comparing the northern and souther plots
-    labs(x = "Transacts", y = "Number of Trees", 
+    labs(x = "transects", y = "Number of Trees", 
          title = "Tree abundance in Northern and Southern Plots")+
     style())
 
@@ -75,13 +75,13 @@ t_rich <- tree %>%
 ggsave(filename = "figures/Trees/tree_rich.png", plot = rich_t, width = 7.5, height = 5) #exporting the graph as png
 
 
-#base on transact
+#base on transect
 t_rich_2 <- tree %>% 
   distinct(species,Plot,richness,Trans) 
 (rich_t2<-ggplot(t_rich_2, aes(fill=species, y=richness,x=Trans))+ #plotting the number of pifalls that are empty or not
     geom_bar(stat = "identity",position = "stack",orientation = "x")+
     facet_wrap("Plot")+ #comparing the northern and souther plots
-    labs(x = "Transacts", y = "Species Richness", 
+    labs(x = "transects", y = "Species Richness", 
          title = "Tree species richness in Northern and Southern Plots")+
     style())
 
