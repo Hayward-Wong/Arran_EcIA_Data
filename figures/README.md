@@ -10,5 +10,6 @@ Here are folders of all the Figures used the Lochranza Ecological Impact Assessm
 ```Bats``` | Figures for Bats data
 ```Birds``` | Figures for Birds data
 ```Camera_Traps```| Figures for Mammal data collected by camera traps
+```Phase I Habitat Survey```| Map for Phase I habitat Survey
 ```Terrestrial Inverts``` | Figures for Terrestrial Invertebrates data
 ```Trees```| Figures for Tree data
