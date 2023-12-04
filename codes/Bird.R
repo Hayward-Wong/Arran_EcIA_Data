@@ -119,7 +119,7 @@ bird_p <- bird_p %>% #adding a column for species richness
     style())
 
 
-ggsave(filename = "figures/Birds/Birds_point_richness.png", plot = Bird_p_rich,width = 5, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_point_richness.png", plot = Bird_p_rich,width = 7.5, height = 6) #exporting the graph as png
 
 
 (Bird_p_rich_2 <- ggplot(bird_p, aes(fill=species, y=richness, x=Plot))+ #Plotting the species richness by point count showing species composition
@@ -128,7 +128,7 @@ ggsave(filename = "figures/Birds/Birds_point_richness.png", plot = Bird_p_rich,w
          title = "Birds species richness sampled by point count\nin Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Birds/Birds_point_richness_2.png", plot = Bird_p_rich_2,width = 5, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_point_richness_2.png", plot = Bird_p_rich_2,width = 7.5, height = 6) #exporting the graph as png
 
 #3. Total----
 bird_total <- bird_t %>% 
