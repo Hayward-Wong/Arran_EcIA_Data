@@ -6,8 +6,8 @@ library(stringr)
 #Style----
 style <- function(){ #setting the style for my plots
   font <- "Helvetica"
-  theme(plot.title = element_text(family = font, size = 14, face = "bold", color = "#222222", hjust = 0.5), 
-        plot.subtitle = element_text(family = font, size = 12, margin = margin(9, 0, 9, 0)), 
+  theme(plot.title = element_text(family = font, size = 18, face = "bold", color = "#222222", hjust = 0.5), 
+        plot.subtitle = element_text(family = font, size = 18, margin = margin(9, 0, 9, 0)), 
         plot.caption = element_blank(),
         plot.margin = unit(c(1,1,1,1), units = , "cm"),
         legend.text.align = 0, 
@@ -15,14 +15,15 @@ style <- function(){ #setting the style for my plots
         legend.title = element_text(family = font, size = 9, face = "bold", color = "#222222",  hjust = 0.5), 
         legend.key = element_blank(), 
         legend.text = element_text(family = font, size = 9, color = "#222222"),
-        axis.text = element_text(family = font, size = 9, color = "#222222"), 
+        axis.text = element_text(family = font, size = 15, color = "#222222"), 
         axis.text.x = element_text(margin = margin(5, b = 10)), 
-        axis.title = element_text(family = font, size = 12, face = "bold", color = "#222222"), 
+        axis.title = element_text(family = font, size = 16, face = "bold", color = "#222222"), 
         axis.ticks = element_blank(), 
         axis.line = element_line(colour = "black"),
-        strip.text = element_text(size = 12, hjust = 0))
+        strip.text = element_text(size = 15, hjust = 0))
 }
 
+  
 #Importing raw data----
 bat<-read.csv("occurrence_dat/bat_occurrence.csv")#loading the bat data
 #Bat data----
@@ -64,18 +65,19 @@ bat.long <- bat.long %>%
                        mid = "grey",
                        high = "#FF0000",
                        midpoint = 0.5) +
-  geom_text(aes(label = occurrenceStatus), color = "Black", size = 3)+
-    labs(x = "Site", y = "Bat species", 
+  geom_text(aes(label = occurrenceStatus), color = "Black", fontface = "bold", size = 3)+
+    labs(x = "Bat Species", y = "Site", 
          title = "Probability of Bat presence at each sampled site",
          fill = "Probability of Bat presence      ") +
     guides(fill = guide_colourbar(barwidth = 10,
                                   barheight = 0.5))+
-    theme(axis.text.x = element_text(angle = 45, hjust = 1),
-          plot.title = element_text(hjust = 0.5),
+    theme(axis.text.x = element_text(size = 11, angle = 45, hjust = 1),
+          axis.text = element_text(size = 11),
+          plot.title = element_text(size = 18, hjust = 0.5),
+          axis.title = element_text(size = 16), 
           legend.position = "bottom",  # Set legend position to bottom
-          legend.box = "horizontal"    # Arrange legend items horizontally
-    )+
-  coord_fixed(ratio = 1))
+          legend.box = "horizontal")+   # Arrange legend items horizontally
+    coord_fixed(ratio = 1))
 
 ggsave(filename = "figures/Bats/bat_prob.png", plot = bat_plot, width = 10, height = 5) #exporting the graph as png
 
@@ -92,9 +94,13 @@ bat.long$Presence <- ifelse(bat.long$occurrenceStatus >= 0.5, 1, 0)
          title = "Bat presence with a 0.5 threshold at each sampled site",
          fill = "Bat presence",
          position = "bottom" ) + 
-    theme(axis.text.x = element_text(angle = 45, hjust = 1),
-          plot.title = element_text(hjust = 0.5),
-          legend.position = "bottom")+
+    theme(axis.text.x = element_text(size = 11, angle = 45, hjust = 1),
+          axis.text = element_text(size = 11),
+          plot.title = element_text(size = 18, hjust = 0.5),
+          axis.title = element_text(size = 16), 
+          legend.title = element_text(size = 13, face = "bold"), 
+          legend.text = element_text(size = 11),
+          legend.position = "bottom")+  # Set legend position to bottom
     coord_fixed(ratio = 1))
   
 ggsave(filename = "figures/Bats/bat0.5.png", plot = bat_0.5, width = 10, height = 5) #exporting the graph as png

@@ -6,8 +6,8 @@ library(tidyverse)
 #Style----
 style <- function(){ #setting the style for my plots
   font <- "Helvetica"
-  theme(plot.title = element_text(family = font, size = 14, face = "bold", color = "#222222", hjust = 0.5), 
-        plot.subtitle = element_text(family = font, size = 12, margin = margin(9, 0, 9, 0)), 
+  theme(plot.title = element_text(family = font, size = 18, face = "bold", color = "#222222", hjust = 0.5), 
+        plot.subtitle = element_text(family = font, size = 18, margin = margin(9, 0, 9, 0)), 
         plot.caption = element_blank(),
         plot.margin = unit(c(1,1,1,1), units = , "cm"),
         legend.text.align = 0, 
@@ -15,12 +15,12 @@ style <- function(){ #setting the style for my plots
         legend.title = element_text(family = font, size = 9, face = "bold", color = "#222222",  hjust = 0.5), 
         legend.key = element_blank(), 
         legend.text = element_text(family = font, size = 9, color = "#222222"),
-        axis.text = element_text(family = font, size = 9, color = "#222222"), 
+        axis.text = element_text(family = font, size = 15, color = "#222222"), 
         axis.text.x = element_text(margin = margin(5, b = 10)), 
-        axis.title = element_text(family = font, size = 12, face = "bold", color = "#222222"), 
+        axis.title = element_text(family = font, size = 16, face = "bold", color = "#222222"), 
         axis.ticks = element_blank(), 
         axis.line = element_line(colour = "black"),
-        strip.text = element_text(size = 12, hjust = 0))
+        strip.text = element_text(size = 15, hjust = 0))
 }
 
 #Importing raw data----
@@ -47,6 +47,16 @@ bird_t <-bird_t %>%
 
 ggsave(filename = "figures/Birds/Birds_transect.png", plot = Bird_transect,width = 10, height = 6) #exporting the graph as png
 
+
+(Bird_transect_tot <- ggplot(bird_t, aes(fill=species, y=individualCount,x=Plot))+ #plotting the individual birds observed per plot
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
+    labs(x = "Bird Families", y = "Individuals Observed", 
+         title = "Birds abundance sampled by transects walks \n for Northern and Southern Plots")+
+    style())
+
+ggsave(filename = "figures/Birds/Birds_transect_tot.png", plot = Bird_transect_tot,width = 9, height = 7) #exporting the graph as png
+
+
 bird_t <- bird_t %>% 
   mutate(richness=1) %>% #creating a column for species richness
   mutate(Trans = case_when( #creating a column for transect
@@ -57,10 +67,25 @@ bird_t <- bird_t %>%
 
 bird_t$Trans <- factor(bird_t$Trans, levels = c("Low", "Mid", "High"))#ordering the factor levels
 
+
+(Bird_transect_abun <- ggplot(bird_t, aes(fill=species, y=individualCount,x=Trans))+ #plotting the individual birds observed per plot
+    geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
+    facet_wrap(~Plot)+ #seperating the Northerna and Southern Plots for comparision
+    labs(x = "Bird Families", y = "Individuals Observed", 
+         title = "Birds abundance sampled by transects walks\nfor Northern and Southern Plots")+
+    style())
+
+ggsave(filename = "figures/Birds/Birds_transect_abun.png", plot = Bird_transect_abun,width = 10, height = 6) #exporting the graph as png
+
+
+bird_t_rich <- bird_t%>% 
+  distinct(scientificName,Plot) %>% 
+  mutate(richness=1)
+
 (Bird_t_rich <- ggplot(bird_t, aes(fill=species, y=richness, x=Trans))+ #Plotting the species richness by transect with species composition
   geom_bar(stat = "identity", postion = "stack",orientation = "x")+
     labs(x = "transects", y = "Species Richness", 
-         title = "Birds species richness in each transect")+
+         title = "Bird species richness in each transect")+
     facet_wrap(~Plot)+#seperating the Northerna and Southern Plots for comparision
     style())
     
@@ -68,25 +93,15 @@ bird_t$Trans <- factor(bird_t$Trans, levels = c("Low", "Mid", "High"))#ordering 
 ggsave(filename = "figures/Birds/Birds_transect_richness.png", plot = Bird_t_rich,width = 10, height = 6) #exporting the graph as png
 
 
-(Bird_t_rich_2 <- ggplot(bird_t, aes(y=richness, x=Trans))+#Plotting the species richness by transect
-    geom_bar(stat = "identity",orientation = "x")+
-    labs(x = "transects", y = "Species Richness", 
-         title = "Birds species richness in each transect")+
-    facet_wrap(~Plot)+#seperating the Northerna and Southern Plots for comparision
-    style())
-
-
-ggsave(filename = "figures/Birds/Birds_transect_richness_2.png", plot = Bird_t_rich_2,width = 10, height = 6) 
-
-bird_t_rich <- bird_t%>% 
-  distinct(scientificName,Plot) %>% 
-  mutate(richness=1)
-
-(Bird_t_rich_3 <- ggplot(bird_t_rich, aes(y=richness, x=Plot))+#Plotting the species richness by transect
+(Bird_t_rich_2 <- ggplot(bird_t_rich, aes(y=richness, x=Plot))+#Plotting the species richness by transect
     geom_bar(stat = "identity",orientation = "x")+
     labs(x = "Plots", y = "Species Richness", 
-         title = "Birds species richness in each transect")+
+         title = "Bird species richness sampled by transect walks\nin Northern and Southern Plots")+
     style())
+
+
+ggsave(filename = "figures/Birds/Birds_transect_richness_2.png", plot = Bird_t_rich_2,width = 7, height = 5) 
+
 
 #2.Point Count Data----
 
