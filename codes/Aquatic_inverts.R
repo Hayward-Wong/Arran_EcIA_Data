@@ -61,7 +61,7 @@ Marsh<-ainv %>%
                                  "Hydrophilidae" = "#00c0b2"))+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
-ggsave(filename = "figures/Aquatic_inverts/stream_ab.png", plot = Stream_ab, width = 8, height = 5) #exporting the graph as png
+ggsave(filename = "figures/Aquatic_inverts/stream_abun.png", plot = Stream_ab, width = 8, height = 5) #exporting the graph as png
 
 
 
@@ -73,7 +73,7 @@ ggsave(filename = "figures/Aquatic_inverts/stream_ab.png", plot = Stream_ab, wid
     style()+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
-ggsave(filename = "figures/Aquatic_inverts/marsh_ab.png", plot = Marsh_ab, width = 8, height = 5) #exporting the graph as png
+ggsave(filename = "figures/Aquatic_inverts/marsh_abun.png", plot = Marsh_ab, width = 8, height = 5) #exporting the graph as png
 
 
 ainv_total_rich <- ainv %>% 
@@ -86,7 +86,7 @@ ainv_total_rich <- ainv %>%
          title = "Total Aquatic Order richness sampled\nin Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Aquatic_inverts/richness.png", plot = Ainv_total_rich, width = 7, height = 4.5) #exporting the graph as png
+ggsave(filename = "figures/Aquatic_inverts/tot_rich.png", plot = Ainv_total_rich, width = 7, height = 4.5) #exporting the graph as png
 
 
 BMWP<-ainv %>% 

@@ -45,7 +45,7 @@ bird_t <-bird_t %>%
   style()+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
-ggsave(filename = "figures/Birds/Birds_transect.png", plot = Bird_transect,width = 10, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_trans.png", plot = Bird_transect,width = 10, height = 6) #exporting the graph as png
 
 
 (Bird_transect_tot <- ggplot(bird_t, aes(fill=species, y=individualCount,x=Plot))+ #plotting the individual birds observed per plot
@@ -54,7 +54,7 @@ ggsave(filename = "figures/Birds/Birds_transect.png", plot = Bird_transect,width
          title = "Birds abundance sampled by transects walks \n for Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Birds/Birds_transect_tot.png", plot = Bird_transect_tot,width = 9, height = 7) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_trans_tot_abun.png", plot = Bird_transect_tot,width = 9, height = 7) #exporting the graph as png
 
 
 bird_t <- bird_t %>% 
@@ -75,7 +75,7 @@ bird_t$Trans <- factor(bird_t$Trans, levels = c("Low", "Mid", "High"))#ordering 
          title = "Birds abundance sampled by transects walks\nfor Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Birds/Birds_transect_abun.png", plot = Bird_transect_abun,width = 10, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_trans_abun.png", plot = Bird_transect_abun,width = 10, height = 6) #exporting the graph as png
 
 
 bird_t_rich <- bird_t%>% 
@@ -90,7 +90,7 @@ bird_t_rich <- bird_t%>%
     style())
     
 
-ggsave(filename = "figures/Birds/Birds_transect_richness.png", plot = Bird_t_rich,width = 10, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_trans_rich.png", plot = Bird_t_rich,width = 10, height = 6) #exporting the graph as png
 
 
 (Bird_t_rich_2 <- ggplot(bird_t_rich, aes(y=richness, x=Plot))+#Plotting the species richness by transect
@@ -100,7 +100,7 @@ ggsave(filename = "figures/Birds/Birds_transect_richness.png", plot = Bird_t_ric
     style())
 
 
-ggsave(filename = "figures/Birds/Birds_transect_richness_2.png", plot = Bird_t_rich_2,width = 7, height = 5) 
+ggsave(filename = "figures/Birds/Birds_trans_rich_2.png", plot = Bird_t_rich_2,width = 7, height = 5) 
 
 
 #2.Point Count Data----
@@ -122,7 +122,7 @@ bird_p <-bird_p %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
 
-ggsave(filename = "figures/Birds/Birds_point.png", plot = Bird_Point,width = 10, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_point_abun.png", plot = Bird_Point,width = 10, height = 6) #exporting the graph as png
 
 bird_p <- bird_p %>% #adding a column for species richness
   mutate(richness=1)
@@ -134,7 +134,7 @@ bird_p <- bird_p %>% #adding a column for species richness
     style())
 
 
-ggsave(filename = "figures/Birds/Birds_point_richness.png", plot = Bird_p_rich,width = 7.5, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_point_rich.png", plot = Bird_p_rich,width = 7.5, height = 6) #exporting the graph as png
 
 
 (Bird_p_rich_2 <- ggplot(bird_p, aes(fill=species, y=richness, x=Plot))+ #Plotting the species richness by point count showing species composition
@@ -143,7 +143,7 @@ ggsave(filename = "figures/Birds/Birds_point_richness.png", plot = Bird_p_rich,w
          title = "Birds species richness sampled by point count\nin Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Birds/Birds_point_richness_2.png", plot = Bird_p_rich_2,width = 7.5, height = 6) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_point_rich_2.png", plot = Bird_p_rich_2,width = 7.5, height = 6) #exporting the graph as png
 
 #3. Total----
 bird_total <- bird_t %>% 
@@ -160,7 +160,7 @@ bird_total <- rbind(bird_total,bird_p) %>%
     style()+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
-ggsave(filename = "figures/Birds/Birds_total_abun.png", plot = Bird_Total,width = 9, height = 7) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_tot_abun.png", plot = Bird_Total,width = 9, height = 7) #exporting the graph as png
 
 bird_total_rich <- bird_total %>% 
   distinct(species,Plot) %>% 
@@ -171,5 +171,5 @@ bird_total_rich <- bird_total %>%
     labs(x = "Plots", y = "Species Richness", 
          title = "Total Birds species richness sampled by point count and transects\nin Northern and Southern Plots")+
     style())
-ggsave(filename = "figures/Birds/Birds_total_rich.png", plot = Bird_tot_rich,width = 9, height = 7.5) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_tot_rich.png", plot = Bird_tot_rich,width = 9, height = 7.5) #exporting the graph as png
 
