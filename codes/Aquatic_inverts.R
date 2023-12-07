@@ -86,7 +86,7 @@ ainv_total_rich <- ainv %>%
          title = "Total Aquatic Order richness sampled\nin Northern and Southern Plots")+
     style())
 
-ggsave(filename = "figures/Aquatic_inverts/richness.png", plot = Ainv_total_rich, width = 5, height = 5) #exporting the graph as png
+ggsave(filename = "figures/Aquatic_inverts/richness.png", plot = Ainv_total_rich, width = 7, height = 4.5) #exporting the graph as png
 
 
 BMWP<-ainv %>% 
