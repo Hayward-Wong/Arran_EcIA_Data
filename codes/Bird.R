@@ -160,14 +160,16 @@ bird_total <- rbind(bird_total,bird_p) %>%
     style()+
     theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 
-ggsave(filename = "figures/Birds/Birds_total.png", plot = Bird_Total,width = 10, height = 10) #exporting the graph as png
+ggsave(filename = "figures/Birds/Birds_total_abun.png", plot = Bird_Total,width = 9, height = 7) #exporting the graph as png
 
 bird_total_rich <- bird_total %>% 
-  distinct(scientificName,Plot) %>% 
+  distinct(species,Plot) %>% 
   mutate(richness=1)
 
-(Bird_total_rich <- ggplot(bird_total_rich, aes(y=richness, x=Plot))+#Plotting the species richness by point count
+(Bird_tot_rich <- ggplot(bird_total_rich, aes(y=richness, x=Plot, fill=species))+#Plotting the species richness by point count
     geom_bar(stat = "identity",orientation = "x")+
     labs(x = "Plots", y = "Species Richness", 
          title = "Total Birds species richness sampled by point count and transects\nin Northern and Southern Plots")+
     style())
+ggsave(filename = "figures/Birds/Birds_total_rich.png", plot = Bird_tot_rich,width = 9, height = 7.5) #exporting the graph as png
+

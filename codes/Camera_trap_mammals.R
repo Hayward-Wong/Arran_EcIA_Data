@@ -49,7 +49,7 @@ mammals_rich<-mammals %>%
   distinct(scientificName,Plot) %>% 
   mutate(richness=1)
 
-(Mrich <- ggplot(mammals_rich, aes(fill=scientificName, y=richness,x=Plot))+ #plotting the mammal abundance
+(Mrich <- ggplot(mammals_rich, aes(fill=scientificName, y=richness,x=Plot))+ #plotting the mammal richness
     geom_bar(stat = "identity",position = "stack",orientation = "x")+ 
     labs(x = "Plots", y = "Species Richness", 
          fill = "Species",
