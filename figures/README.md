@@ -2,6 +2,15 @@
 > ### by Hayward Wong
 ## Summary
 Here are folders of all the Figures used the Lochranza Ecological Impact Assessment sorted by their categories
+
+### Abbreviations used for figures
+| ---- | ---- |
+```abun``` | abundance
+```rich``` | richenss
+```tot```| total
+```trans```| transects
+```snet```| sweep-netting
+
 ### Important Files
 
 | File name | Description |
