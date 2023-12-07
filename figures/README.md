@@ -4,6 +4,7 @@
 Here are folders of all the Figures used the Lochranza Ecological Impact Assessment sorted by their categories
 
 ### Abbreviations used for figures
+| Abbreviations | Description |
 | ---- | ---- |
 ```abun``` | abundance
 ```rich``` | richenss
