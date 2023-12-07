@@ -4,7 +4,16 @@
 ## Summary
 This is a public repository where I included all the contents such as Data, Codes and Extra for the Lochranza Ecological Impact Assessment
 ## Meta Data
+### Abbreviations used for figures
+| Abbreviations | Description |
+| ---- | ---- |
+```abun``` | abundance
+```rich``` | richenss
+```tot```| total
+```trans```| transects
+```snet```| sweep-netting
 
+## Imprtant files
 | File name | Format | Description |
 | ---- | ---- | ---- |
 ```README.md``` | Basic info on the repository
