@@ -1,4 +1,5 @@
 # Arran_EcIA_Data
+[![DOI](https://zenodo.org/badge/725800327.svg)](https://zenodo.org/doi/10.5281/zenodo.10279424)
 > ### by Hayward Wong
 ## Summary
 This is a public repository where I included all the contents such as Data, Codes and Extra for the Lochranza Ecological Impact Assessment
