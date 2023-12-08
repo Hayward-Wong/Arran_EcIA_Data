@@ -1,8 +1,18 @@
 # Arran_EcIA_Data
 [![DOI](https://zenodo.org/badge/725800327.svg)](https://zenodo.org/doi/10.5281/zenodo.10279424)
 > ### by Hayward Wong
-## Summary
+## Description
 This is a public repository where I included all the contents such as Data, Codes and Extra for the Lochranza Ecological Impact Assessment
+
+## Summary
+the Northern Plot is recommended for commercial forestry development due to
+its potential benefits to the prioritised Red squirrels, higher bird abundance of least
+concerned species, the presence of invasive species that could be managed through
+forestry, and the lack of SSSI status, which provides more flexibility in management
+decisions. This recommendation aligns with the need to balance economic development with
+ecological conservation, preserving the sensitive Southern Plot for its ecological significance
+and unique biodiversity
+
 ## Meta Data
 ### Abbreviations used for figures
 | Abbreviations | Description |
